@@ -15,6 +15,7 @@
     <modules>
         <module>runner-app</module>
         <module>runner-core</module>
+        <module>producer-core</module>
     </modules>
 
     <parent>
