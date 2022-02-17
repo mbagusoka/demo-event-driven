@@ -41,6 +41,12 @@
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
+
+        <dependency>
+            <groupId>com.example</groupId>
+            <artifactId>producer-core</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
 
 </project>

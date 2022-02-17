@@ -9,22 +9,15 @@ public class MessageProducerCmd {
 
     String topic;
 
+    String key;
+
     String payload;
 
     Consumer<Throwable> failedCallback;
 
-    Consumer<MessageMetadataAware> successCallback;
+    Runnable successCallback;
 
     public static MessageProducerCmd valueOf(String topic, String payload) {
-        return new MessageProducerCmd(topic, payload, t -> {}, metadata -> {});
-    }
-
-    public static MessageProducerCmd valueOf(
-        String topic,
-        String payload,
-        Consumer<Throwable> failedCallback,
-        Consumer<MessageMetadataAware> successCallback
-    ) {
-        return new MessageProducerCmd(topic, payload, failedCallback, successCallback);
+        return new MessageProducerCmd(topic, null, payload, t -> {}, () -> {});
     }
 }

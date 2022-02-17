@@ -49,6 +49,12 @@
             <artifactId>spring-kafka-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>com.example</groupId>
+            <artifactId>producer-core</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
 
 </project>
