@@ -1,1 +1,6 @@
-
+kafka:
+  producer:
+    topic-producers:
+      test-topic:
+        bootstrap-servers: localhost:9092
+        ack: all
