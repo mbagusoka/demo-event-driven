@@ -16,6 +16,7 @@
         <module>runner-app</module>
         <module>runner-core</module>
         <module>producer-core</module>
+        <module>kafka-producer-client</module>
     </modules>
 
     <parent>
