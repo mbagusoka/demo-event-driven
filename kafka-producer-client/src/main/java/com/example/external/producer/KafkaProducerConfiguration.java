@@ -29,14 +29,31 @@ public class KafkaProducerConfiguration {
 
         Map<Pattern, ProducerFactory<Object, Object>> producerMap = new LinkedHashMap<>();
         properties.getTopicProducers().forEach(
-            (key, topicProducerProperty) -> createProducer(context, key, topicProducerProperty));
+            (key, topicProducerProperty) -> createProducer(
+                context,
+                producerMap,
+                key,
+                topicProducerProperty
+            ));
 
         return new RoutingKafkaTemplate(producerMap);
     }
 
     private void createProducer(
         GenericApplicationContext context,
+        Map<Pattern, ProducerFactory<Object, Object>> producerMap,
         String key,
+        TopicProducerProperty topicProducerProperty
+    ) {
+        DefaultKafkaProducerFactory<Object, Object> producerFactory =
+            getKafkaProducerFactory(topicProducerProperty);
+
+        context.registerBean(DefaultKafkaProducerFactory.class, key, producerFactory);
+
+        producerMap.put(Pattern.compile(key), producerFactory);
+    }
+
+    private DefaultKafkaProducerFactory<Object, Object> getKafkaProducerFactory(
         TopicProducerProperty topicProducerProperty
     ) {
         Map<String, Object> properties = new HashMap<>();
@@ -48,9 +65,6 @@ public class KafkaProducerConfiguration {
         properties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         properties.put(ProducerConfig.ACKS_CONFIG, topicProducerProperty.getAck());
 
-        DefaultKafkaProducerFactory<Object, Object> producerFactory =
-            new DefaultKafkaProducerFactory<>(properties);
-
-        context.registerBean(DefaultKafkaProducerFactory.class, key, producerFactory);
+        return new DefaultKafkaProducerFactory<>(properties);
     }
 }
