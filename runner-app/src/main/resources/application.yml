@@ -4,3 +4,11 @@ kafka:
       test-topic:
         bootstrap-servers: localhost:9092
         ack: all
+  consumer:
+    consumers-container:
+      default:
+        bootstrap-servers: localhost:9092
+        group-id: groupId
+        concurrency: 3
+        auto-offset-reset: latest
+        max-poll-records: 500

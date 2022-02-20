@@ -17,6 +17,7 @@
         <module>runner-core</module>
         <module>producer-core</module>
         <module>kafka-producer-client</module>
+        <module>kafka-consumer-client</module>
     </modules>
 
     <parent>

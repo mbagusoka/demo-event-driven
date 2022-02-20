@@ -71,6 +71,12 @@
             <artifactId>kafka-producer-client</artifactId>
             <version>1.0</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.example</groupId>
+            <artifactId>kafka-consumer-client</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
 
     <build>
