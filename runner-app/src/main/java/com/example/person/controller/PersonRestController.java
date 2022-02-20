@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.person.usecase.create.CreatePerson;
-import com.example.person.usecase.create.CreatePersonCmd;
+import com.example.person.usecase.produce.ProducePerson;
+import com.example.person.usecase.produce.ProducePersonCmd;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -16,10 +16,10 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/person")
 public class PersonRestController {
 
-    private final CreatePerson createPerson;
+    private final ProducePerson producePerson;
 
     @PostMapping
-    public void create(@Valid @RequestBody CreatePersonCmd cmd) {
-        createPerson.create(cmd);
+    public void create(@Valid @RequestBody ProducePersonCmd cmd) {
+        producePerson.produce(cmd);
     }
 }

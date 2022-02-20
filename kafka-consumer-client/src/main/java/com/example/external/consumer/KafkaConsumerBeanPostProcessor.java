@@ -7,10 +7,10 @@ import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.lang.NonNull;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 @Configuration
-@Log4j2
+@Slf4j
 @RequiredArgsConstructor
 @DependsOn({"kafkaConsumerFailureHandlerFactory"})
 public class KafkaConsumerBeanPostProcessor implements BeanPostProcessor {

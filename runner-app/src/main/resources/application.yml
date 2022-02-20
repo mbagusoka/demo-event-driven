@@ -1,14 +1,17 @@
 kafka:
   producer:
     topic-producers:
-      test-topic:
+      create-person:
         bootstrap-servers: localhost:9092
         ack: all
   consumer:
     consumers-container:
-      default:
+      person:
         bootstrap-servers: localhost:9092
         group-id: groupId
         concurrency: 3
         auto-offset-reset: latest
         max-poll-records: 500
+
+person:
+  create-topic: create-person
