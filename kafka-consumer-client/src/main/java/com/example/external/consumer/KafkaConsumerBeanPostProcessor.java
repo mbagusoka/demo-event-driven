@@ -37,7 +37,6 @@ public class KafkaConsumerBeanPostProcessor implements BeanPostProcessor {
             .get(beanName);
 
         factory.setRetryTemplate(failureHandler.getRetryTemplate());
-        factory.setErrorHandler(failureHandler.getErrorHandler());
         factory.setRecoveryCallback(failureHandler.getRecoveryCallback());
     }
 
