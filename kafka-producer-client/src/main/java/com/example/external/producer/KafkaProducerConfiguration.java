@@ -11,7 +11,6 @@ import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.support.GenericApplicationContext;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.ProducerFactory;
 import org.springframework.kafka.core.RoutingKafkaTemplate;
@@ -21,16 +20,12 @@ import org.springframework.util.Assert;
 public class KafkaProducerConfiguration {
 
     @Bean
-    public RoutingKafkaTemplate routingKafkaTemplate(
-        KafkaProducerProperties properties,
-        GenericApplicationContext context
-    ) {
+    public RoutingKafkaTemplate routingKafkaTemplate(KafkaProducerProperties properties) {
         Assert.notEmpty(properties.getTopicProducers(), () -> "Producer Map cannot be empty");
 
         Map<Pattern, ProducerFactory<Object, Object>> producerMap = new LinkedHashMap<>();
         properties.getTopicProducers().forEach(
             (key, topicProducerProperty) -> createProducer(
-                context,
                 producerMap,
                 key,
                 topicProducerProperty
@@ -40,15 +35,12 @@ public class KafkaProducerConfiguration {
     }
 
     private void createProducer(
-        GenericApplicationContext context,
         Map<Pattern, ProducerFactory<Object, Object>> producerMap,
         String key,
         TopicProducerProperty topicProducerProperty
     ) {
         DefaultKafkaProducerFactory<Object, Object> producerFactory =
             getKafkaProducerFactory(topicProducerProperty);
-
-        context.registerBean(DefaultKafkaProducerFactory.class, key, producerFactory);
 
         producerMap.put(Pattern.compile(key), producerFactory);
     }
