@@ -3,7 +3,6 @@ package com.example.external.consumer;
 import org.springframework.kafka.listener.ErrorHandler;
 import org.springframework.kafka.listener.LoggingErrorHandler;
 import org.springframework.retry.RecoveryCallback;
-import org.springframework.retry.RetryPolicy;
 import org.springframework.retry.policy.SimpleRetryPolicy;
 import org.springframework.retry.support.RetryTemplate;
 import org.springframework.stereotype.Component;
