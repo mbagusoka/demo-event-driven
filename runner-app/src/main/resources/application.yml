@@ -4,9 +4,18 @@ kafka:
       create-person:
         bootstrap-servers: localhost:9092
         ack: all
+      create-person-retry:
+        bootstrap-servers: localhost:9092
+        ack: all
   consumer:
     consumers-container:
-      person:
+      create-person:
+        bootstrap-servers: localhost:9092
+        group-id: groupId
+        concurrency: 3
+        auto-offset-reset: latest
+        max-poll-records: 500
+      create-person-retry:
         bootstrap-servers: localhost:9092
         group-id: groupId
         concurrency: 3
@@ -15,3 +24,4 @@ kafka:
 
 person:
   create-topic: create-person
+  create-topic-retry: create-person-retry

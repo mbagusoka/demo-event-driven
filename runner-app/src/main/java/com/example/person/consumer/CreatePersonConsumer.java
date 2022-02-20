@@ -21,10 +21,17 @@ public class CreatePersonConsumer {
 
     private final CreatePerson createPerson;
 
-    @KafkaListener(topics = "${person.create-topic}", containerFactory = "person")
-    @SneakyThrows(JsonProcessingException.class)
+    @KafkaListener(topics = "${person.create-topic}", containerFactory = "create-person")
     public void listen(ConsumerRecord<String, String> message) {
         log.info("Processing message: {}", message);
+
+        throw new RuntimeException("Error");
+    }
+
+    @KafkaListener(topics = "${person.create-topic-retry}", containerFactory = "create-person-retry")
+    @SneakyThrows(JsonProcessingException.class)
+    public void listenRetry(ConsumerRecord<String, String> message) {
+        log.info("Processing retry message: {}", message);
 
         CreatePersonCmd cmd = mapper.readValue(message.value(), CreatePersonCmd.class);
 

@@ -9,4 +9,6 @@ import lombok.Data;
 public class PersonTopicProperties implements PersonTopicContextHolder {
 
     String createTopic;
+
+    String createTopicRetry;
 }
