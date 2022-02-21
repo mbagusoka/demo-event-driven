@@ -15,7 +15,7 @@ public class MessageProducerCmd {
     /**
      * The key of message we want to provide. This is optional. <br>
      * For Kafka implementation, this is required if we want to ensure same message produced in
-     * same topic.
+     * same partition.
      */
     String key;
 
