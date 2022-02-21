@@ -1,15 +1,15 @@
 kafka:
   consumer:
     consumers-container:
-      default:
+      create-person:
         bootstrap-servers: localhost:9092
         group-id: groupId
-        concurrency: 2
+        concurrency: 3
         auto-offset-reset: latest
-        max-poll-records: 20
-      high-concurrent:
+        max-poll-records: 500
+      create-person-retry:
         bootstrap-servers: localhost:9092
         group-id: groupId
-        concurrency: 5
+        concurrency: 3
         auto-offset-reset: latest
         max-poll-records: 500
