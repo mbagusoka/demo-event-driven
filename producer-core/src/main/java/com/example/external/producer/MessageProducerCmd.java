@@ -3,6 +3,7 @@ package com.example.external.producer;
 import java.util.function.Consumer;
 
 import lombok.Value;
+import lombok.With;
 
 @Value
 public class MessageProducerCmd {
@@ -27,11 +28,13 @@ public class MessageProducerCmd {
     /**
      * Callback to be called when message failed to be sent.
      */
+    @With
     Consumer<Throwable> failedCallback;
 
     /**
      * Callback to be called when message success to be sent.
      */
+    @With
     Runnable successCallback;
 
     public static MessageProducerCmd valueOf(String topic, String payload) {
