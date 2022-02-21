@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
  * specific bean {@link ConcurrentKafkaListenerContainerFactory} behavior defined.
  */
 @Component
-public class DefaultKafkaConsumerFailureHandler implements KafkaConsumerFailureHandler {
+public class NoOpsKafkaConsumerFailureHandler implements KafkaConsumerFailureHandler {
 
     private static final int NO_RETRY = 1;
 
