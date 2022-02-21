@@ -18,6 +18,10 @@ import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * This class purpose is to register the {@link ConcurrentKafkaListenerContainerFactory} based on
+ * value defined in {@link KafkaConsumerContainerContextHolder}.
+ */
 @Slf4j
 public class KafkaConsumerContainerRegistrar {
 
