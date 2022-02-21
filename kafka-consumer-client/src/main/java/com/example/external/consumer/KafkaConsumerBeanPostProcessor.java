@@ -9,6 +9,12 @@ import org.springframework.lang.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * This class purpose is to intercept {@link ConcurrentKafkaListenerContainerFactory} bean
+ * creation to add the failure handler mechanism specific to each bean.
+ *
+ * @see KafkaConsumerFailureHandler
+ */
 @Configuration
 @Slf4j
 @RequiredArgsConstructor
