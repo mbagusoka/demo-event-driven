@@ -46,8 +46,7 @@ public class CreatePersonConsumer {
     
 }
 ```
-* If you want to add failure handler for the specific consumer container, you can just implement [KafkaConsumerFailureHandler](com/example/external/consumer/KafkaConsumerFailureHandler.java).
-
+* If you want to add failure handler for the specific consumer container, you can just implement [KafkaConsumerFailureHandler](src/main/java/com/example/external/consumer/KafkaConsumerFailureHandler.java).
 ```java
 package com.example.person.consumer;
 
