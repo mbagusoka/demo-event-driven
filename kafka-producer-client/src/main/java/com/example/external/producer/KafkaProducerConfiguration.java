@@ -42,7 +42,7 @@ public class KafkaProducerConfiguration {
         DefaultKafkaProducerFactory<Object, Object> producerFactory =
             getKafkaProducerFactory(topicProducerProperty);
 
-        producerMap.put(Pattern.compile(key), producerFactory);
+        producerMap.put(Pattern.compile(key.concat(".*")), producerFactory);
     }
 
     private DefaultKafkaProducerFactory<Object, Object> getKafkaProducerFactory(
