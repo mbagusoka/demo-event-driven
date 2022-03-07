@@ -25,5 +25,9 @@ class KafkaConsumerContainerContextHolder {
 
         private int maxPollRecords = 500;
 
+        /**
+         * In milliseconds.
+         */
+        private int maxPollInterval = 300000;
     }
 }

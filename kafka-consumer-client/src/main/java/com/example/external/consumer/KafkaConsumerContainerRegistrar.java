@@ -59,6 +59,7 @@ public class KafkaConsumerContainerRegistrar {
         props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, properties.getAutoOffsetReset());
         props.put(ConsumerConfig.GROUP_ID_CONFIG, properties.getGroupId());
         props.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, properties.getMaxPollRecords());
+        props.put(ConsumerConfig.MAX_POLL_INTERVAL_MS_CONFIG, properties.getMaxPollInterval());
 
         return props;
     }

@@ -7,9 +7,11 @@ kafka:
         concurrency: 3
         auto-offset-reset: latest
         max-poll-records: 500
+        max-poll-interval: 60000
       create-person-retry:
         bootstrap-servers: localhost:9092
         group-id: groupId
         concurrency: 3
         auto-offset-reset: latest
         max-poll-records: 500
+        max-poll-interval: 60000
