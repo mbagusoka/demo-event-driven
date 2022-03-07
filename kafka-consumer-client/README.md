@@ -16,12 +16,14 @@ kafka:
         concurrency: 3 # number of threads to serve the topic. Ideally match the number of topic's partitions.
         auto-offset-reset: latest # offset to fetch when the consumer join the topic for the first time.
         max-poll-records: 500 # number of records to be polled in one batch.
+        max-poll-interval: 90000 # interval to wait for the consumer to be considered failed to consume message, in milliseconds.
       create-person-retry:
         bootstrap-servers: localhost:9092
         group-id: groupId
         concurrency: 3
         auto-offset-reset: latest
         max-poll-records: 500
+        max-poll-interval: 60000
 ```
 * Create your [@KafkaListener](org/springframework/kafka/annotation/KafkaListener.java) with container factory based on the name of consumer bean in application.yml.
 ```java
