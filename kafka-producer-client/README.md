@@ -8,13 +8,13 @@ automatically for each topic using [RoutingKafkaTemplate](/org/springframework/k
 kafka:
   producer:
     topic-producers:
-      create-person: # the name of the topic
+      - topic-prefix: create-person # the prefix of the topic
         bootstrap-servers: localhost:9091,localhost:9093 # comma separated hostname and port of Kafka broker.
         # 0 = Just fire and forget. Producer won't wait for an acknowledgement.
         # 1 = Acknowledgement is sent by the broker when message is successfully written on the leader.
         # all = Acknowledgement is sent by the broker when message is successfully written on all replicas.
         ack: all
-      create-person-retry:
+      - topic-prefix: create-person-retry
         bootstrap-servers: localhost:9092
         ack: all 
 ```

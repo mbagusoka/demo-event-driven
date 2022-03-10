@@ -21,28 +21,27 @@ public class KafkaProducerConfiguration {
 
     @Bean
     public RoutingKafkaTemplate routingKafkaTemplate(KafkaProducerProperties properties) {
-        Assert.notEmpty(properties.getTopicProducers(), () -> "Producer Map cannot be empty");
+        Assert.notEmpty(
+            properties.getTopicProducers(),
+            () -> "Producer Properties cannot be empty"
+        );
 
         Map<Pattern, ProducerFactory<Object, Object>> producerMap = new LinkedHashMap<>();
-        properties.getTopicProducers().forEach(
-            (key, topicProducerProperty) -> createProducer(
-                producerMap,
-                key,
-                topicProducerProperty
-            ));
+        properties.getTopicProducers()
+            .forEach(property -> createProducer(producerMap, property));
 
         return new RoutingKafkaTemplate(producerMap);
     }
 
     private void createProducer(
         Map<Pattern, ProducerFactory<Object, Object>> producerMap,
-        String key,
         TopicProducerProperty topicProducerProperty
     ) {
         DefaultKafkaProducerFactory<Object, Object> producerFactory =
             getKafkaProducerFactory(topicProducerProperty);
 
-        producerMap.put(Pattern.compile(key.concat(".*")), producerFactory);
+        Pattern topicPattern = Pattern.compile(topicProducerProperty.getTopicPrefix().concat(".*"));
+        producerMap.put(topicPattern, producerFactory);
     }
 
     private DefaultKafkaProducerFactory<Object, Object> getKafkaProducerFactory(

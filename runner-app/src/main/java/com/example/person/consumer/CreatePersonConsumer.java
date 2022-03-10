@@ -21,7 +21,7 @@ public class CreatePersonConsumer {
 
     private final CreatePerson createPerson;
 
-    @KafkaListener(topics = "${person.create-topic}", containerFactory = "person")
+    @KafkaListener(topics = "${person.create-topic}", containerFactory = "create-person")
     @SneakyThrows(JsonProcessingException.class)
     public void listen(ConsumerRecord<String, String> message) {
         log.info("Processing message: {}", message);

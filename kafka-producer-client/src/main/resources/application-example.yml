@@ -1,9 +1,9 @@
 kafka:
   producer:
     topic-producers:
-      create-person:
+      - topic-prefix: create-person
         bootstrap-servers: localhost:9092
         ack: all
-      create-person-retry:
+      - topic-prefix: create-person-retry
         bootstrap-servers: localhost:9092
         ack: all
