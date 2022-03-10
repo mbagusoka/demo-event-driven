@@ -1,7 +1,7 @@
 package com.example.external.consumer;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 import lombok.Data;
 
@@ -10,10 +10,12 @@ class KafkaConsumerContainerContextHolder {
 
     static final String PROPERTIES_PREFIX = "kafka.consumer";
 
-    private Map<String, KafkaConsumerContainerProperty> consumersContainer = new HashMap<>();
+    private List<KafkaConsumerContainerProperty> consumersContainer = new ArrayList<>();
 
     @Data
     static class KafkaConsumerContainerProperty {
+
+        private String containerName;
 
         private String bootstrapServers;
 

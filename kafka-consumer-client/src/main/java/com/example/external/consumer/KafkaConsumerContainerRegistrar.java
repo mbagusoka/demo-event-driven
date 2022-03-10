@@ -33,20 +33,19 @@ public class KafkaConsumerContainerRegistrar {
 
     private KafkaConsumerContainerContextHolder constructPropertiesMap(Environment environment) {
         Binder binder = Binder.get(environment);
-        KafkaConsumerContainerContextHolder propertiesMap = binder
+        KafkaConsumerContainerContextHolder contextHolder = binder
             .bind(
                 KafkaConsumerContainerContextHolder.PROPERTIES_PREFIX,
                 Bindable.of(KafkaConsumerContainerContextHolder.class)
             )
             .orElseThrow(() -> new KafkaException("Consumer Properties not defined"));
 
-        propertiesMap.getConsumersContainer().forEach((key, schedulerProperties) -> log.info(
-            "Loading kafka scheduler: key: \"{}\", schedulerProperties: {}",
-            key,
-            schedulerProperties
+        contextHolder.getConsumersContainer().forEach(containerProperties -> log.info(
+            "Loading kafka scheduler: schedulerProperties: {}",
+            containerProperties
         ));
 
-        return propertiesMap;
+        return contextHolder;
     }
 
     private Map<String, Object> consumerConfigs(
@@ -74,16 +73,16 @@ public class KafkaConsumerContainerRegistrar {
         KafkaConsumerContainerContextHolder propertiesFactory,
         BeanDefinitionRegistry registry
     ) {
-        KafkaConsumerContainerContextHolder.KafkaConsumerContainerProperty defaultProperties =
-            propertiesFactory.getConsumersContainer().get("default");
-
-        if (defaultProperties != null) {
-            registerBeanDefinition(
+        propertiesFactory.getConsumersContainer()
+            .stream()
+            .filter(properties -> "default".equals(properties.getContainerName()))
+            .findAny()
+            .ifPresent(defaultProperties -> registerBeanDefinition(
                 registry,
                 "kafkaListenerContainerFactory",
                 defaultProperties
-            );
-        }
+            ));
+
     }
 
     private GenericBeanDefinition createBeanDefinition(
@@ -101,7 +100,8 @@ public class KafkaConsumerContainerRegistrar {
     }
 
     private void registerBeanDefinition(
-        BeanDefinitionRegistry registry, String beanName,
+        BeanDefinitionRegistry registry,
+        String beanName,
         KafkaConsumerContainerContextHolder.KafkaConsumerContainerProperty properties
     ) {
         log.info("Registering bean \"{}\" with properties: {}", beanName, properties);
@@ -116,7 +116,9 @@ public class KafkaConsumerContainerRegistrar {
         registerDefault(propertiesMap, registry);
 
         propertiesMap.getConsumersContainer()
-            .forEach((key, properties) -> registerBeanDefinition(registry, key, properties));
+            .forEach(properties ->
+                registerBeanDefinition(registry, properties.getContainerName(), properties)
+            );
     }
 
 }

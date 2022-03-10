@@ -1,11 +1,12 @@
 package com.example.external.producer;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.kafka.core.ProducerFactory;
 
 import lombok.Data;
 
@@ -14,10 +15,15 @@ import lombok.Data;
 @Data
 public class KafkaProducerProperties {
 
-    private Map<String, TopicProducerProperty> topicProducers = new HashMap<>();
+    private List<TopicProducerProperty> topicProducers = new ArrayList<>();
 
     @Data
     public static class TopicProducerProperty {
+
+        /**
+         * The topic prefix to match between the topic and the related {@link ProducerFactory}.
+         */
+        private String topicPrefix;
 
         /**
          * List of Kafka's clusters hostname with port comma separated.

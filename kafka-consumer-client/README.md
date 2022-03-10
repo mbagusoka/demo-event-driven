@@ -10,14 +10,14 @@ Reference: [What is consumer / listener container](https://stackoverflow.com/que
 kafka:
   consumer:
     consumers-container:
-      create-person: # name of the container consumer beans.
+      - container-name: create-person # name of the container consumer beans.
         bootstrap-servers: localhost:9092 # comma separated hostname and port of Kafka broker.
         group-id: groupId # ID of the consumer group.
         concurrency: 3 # number of threads to serve the topic. Ideally match the number of topic's partitions.
         auto-offset-reset: latest # offset to fetch when the consumer join the topic for the first time.
         max-poll-records: 500 # number of records to be polled in one batch.
         max-poll-interval: 90000 # interval to wait for the consumer to be considered failed to consume message, in milliseconds.
-      create-person-retry:
+      - container-name: create-person-retry
         bootstrap-servers: localhost:9092
         group-id: groupId
         concurrency: 3
