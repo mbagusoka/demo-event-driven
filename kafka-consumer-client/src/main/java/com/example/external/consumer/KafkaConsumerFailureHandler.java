@@ -1,18 +1,25 @@
 package com.example.external.consumer;
 
+import org.apache.kafka.clients.CommonClientConfigs;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.listener.ErrorHandler;
 import org.springframework.kafka.listener.SeekToCurrentErrorHandler;
 import org.springframework.retry.RecoveryCallback;
+import org.springframework.retry.backoff.BackOffPolicy;
 import org.springframework.retry.support.RetryTemplate;
 
 public interface KafkaConsumerFailureHandler {
 
     /**
-     * The retry template which will be used to handle failure when consume message.
+     * The retry template which will be used to handle failure when consume message. <br>
+     * Please note when using {@link BackOffPolicy}, we must also configure the
+     * {@link CommonClientConfigs#MAX_POLL_INTERVAL_MS_CONFIG} to be greater than total wait time in
+     * {@link RetryTemplate} to ensure that the consumer not considered to be failed and need
+     * to rebalance.
      *
      * @return {@link RetryTemplate}
+     * @see CommonClientConfigs#MAX_POLL_INTERVAL_MS_DOC
      */
     RetryTemplate getRetryTemplate();
 
@@ -37,12 +44,17 @@ public interface KafkaConsumerFailureHandler {
      * {@link RecoveryCallback} combination. <br>
      * The typical use case for this method is when we want to use stateful retry using
      * {@link SeekToCurrentErrorHandler}. <br><br>
-     * <p>
-     * Please note that the {@link ErrorHandler} and {@link RetryTemplate} should not be used
-     * together, we must choose. Please don't override this if we intend to use
+     * Please note: <br>
+     * 1. When using {@link BackOffPolicy}, we must also configure the
+     * {@link CommonClientConfigs#MAX_POLL_INTERVAL_MS_CONFIG} to be greater than total wait time in
+     * {@link RetryTemplate} to ensure that the consumer not considered to be failed and need
+     * to rebalance. <br>
+     * 2. {@link ErrorHandler} and {@link RetryTemplate} should not be used
+     * together, we must choose either one. Please don't override this if we intend to use
      * {@link RetryTemplate}.
      *
      * @return {@link ErrorHandler}
+     * @see <a href='https://www.linkedin.com/pulse/kafka-consumer-retry-rob-golder/'>Kafka Consumer Retry</a>
      */
     default ErrorHandler getErrorHandler() {
         return null;
@@ -54,7 +66,7 @@ public interface KafkaConsumerFailureHandler {
      *
      * @return true if {@link ErrorHandler} is supplied.
      */
-    default boolean isUseErrorHandler() {
+    default boolean hasErrorHandler() {
         return null != getErrorHandler();
     }
 }

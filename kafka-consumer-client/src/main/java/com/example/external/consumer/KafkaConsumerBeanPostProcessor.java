@@ -4,6 +4,7 @@ import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
+import org.springframework.kafka.listener.ContainerProperties;
 import org.springframework.lang.NonNull;
 
 import lombok.RequiredArgsConstructor;
@@ -42,8 +43,9 @@ public class KafkaConsumerBeanPostProcessor implements BeanPostProcessor {
         KafkaConsumerFailureHandler failureHandler = kafkaConsumerFailureHandlerFactory
             .get(beanName);
 
-        if (failureHandler.isUseErrorHandler()) {
+        if (failureHandler.hasErrorHandler()) {
             factory.setErrorHandler(failureHandler.getErrorHandler());
+            factory.getContainerProperties().setAckMode(ContainerProperties.AckMode.RECORD);
         } else {
             factory.setRetryTemplate(failureHandler.getRetryTemplate());
             factory.setRecoveryCallback(failureHandler.getRecoveryCallback());
