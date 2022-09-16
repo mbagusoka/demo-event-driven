@@ -7,6 +7,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Value;
+import lombok.With;
 
 @Value
 @NoArgsConstructor(force = true, access = AccessLevel.PRIVATE)
@@ -14,6 +15,7 @@ import lombok.Value;
 public class CreatePersonCmd {
 
     @NotBlank(message = "Name cannot be empty")
+    @With
     String name;
 
     public Person toEntity() {

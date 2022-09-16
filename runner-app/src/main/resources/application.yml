@@ -15,13 +15,12 @@ kafka:
         concurrency: 3
         auto-offset-reset: latest
         max-poll-records: 500
-      - container-name: create-person-retry
+      - container-name: create-another-person
         bootstrap-servers: localhost:9092
-        group-id: groupId
+        group-id: anotherGroupId
         concurrency: 3
         auto-offset-reset: latest
         max-poll-records: 500
 
 person:
   create-topic: create-person
-  create-topic-retry: create-person-retry
